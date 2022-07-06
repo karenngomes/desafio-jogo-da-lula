@@ -19,7 +19,7 @@
     "noImplicitAny": false,
     "baseUrl": "./src",
     "strict": true,
-    "strictNullChecks": false,
+    "jsxImportSource": "@emotion/react",
     "strictFunctionTypes": false,
     "downlevelIteration": true,
     "plugins": [
