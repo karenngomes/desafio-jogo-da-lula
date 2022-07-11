@@ -12,7 +12,6 @@ const AppContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.primary};
   min-height: 100vh;
-  height: 100%;
   display: flex;
   flex-direction: column;
 `;
@@ -20,12 +19,15 @@ const AppContainer = styled.div`
 const App = () => {
   const [name, setName] = useState("dark");
   const theme = getTheme(name);
+  const isLight = name === "light";
+
+  const toggleTheme = () => isLight ? setName('dark') : setName('light')
 
   return (
     <ThemeProvider theme={theme}>
       <AppContainer>
         <React.Fragment>
-          <Header setName={setName} />
+          <Header toggleTheme={toggleTheme} isLight={isLight} />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/game" element={<GamePage />} />
