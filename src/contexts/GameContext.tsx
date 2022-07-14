@@ -3,7 +3,7 @@ import { createContext, useCallback, useContext, useState } from "react";
 import { URL_FAKER_NAMES } from "utils/constants";
 import {
   endGame,
-  getDataLocalStorage,
+  getFormattedDataLocalStorage,
   setDataLocalStorage,
 } from "services/localStorageService";
 import { GameState, GameType, PlayerType } from "types/index";
@@ -15,39 +15,16 @@ import {
 
 const GameContext = createContext<GameType>({} as GameType);
 
-// eslint-disable-next-line react/prop-types
-const GameProvider: React.FC = ({ children }): JSX.Element => {
+const GameProvider: React.FC = ({
+  children,
+}: {
+  children: React.ReactNode;
+}): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEndGame, setIsEndGame] = useState<boolean>(false);
 
   const [data, setData] = useState<GameState>(() => {
-    const dataLocalStorage = getDataLocalStorage();
-    if (dataLocalStorage) {
-      const remainingPlayers =
-        JSON.parse(dataLocalStorage)?.remainingPlayers || [];
-
-      const eliminatedPlayers =
-        JSON.parse(dataLocalStorage)?.eliminatedPlayers || [];
-
-      const totalPrize = calculateTotalPrize(
-        remainingPlayers,
-        JSON.parse(dataLocalStorage)?.totalPrize
-      );
-
-      const votesToEndGame = calculateVotesToEndGame(remainingPlayers);
-
-      const round = JSON.parse(dataLocalStorage)?.round || 0;
-
-      return {
-        remainingPlayers,
-        eliminatedPlayers,
-        round,
-        totalPrize,
-        votesToEndGame,
-      } as GameType;
-    }
-
-    return {} as GameType;
+    return getFormattedDataLocalStorage();
   });
 
   const initGame = useCallback(() => {
