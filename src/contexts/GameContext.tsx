@@ -44,7 +44,6 @@ const GameProvider: React.FC = ({ children }): JSX.Element => {
         round,
         totalPrize,
         votesToEndGame,
-        // ...JSON.parse(dataLocalStorage),
       } as GameType;
     }
 
