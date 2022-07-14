@@ -7,6 +7,7 @@ import { Header } from "components/Header";
 import { HomePage } from "pages/HomePage";
 import { GamePage } from "pages/GamePage";
 import { getTheme } from "theme";
+import { GameProvider } from "contexts/GameContext";
 
 const AppContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
@@ -21,20 +22,22 @@ const App = () => {
   const theme = getTheme(name);
   const isLight = name === "light";
 
-  const toggleTheme = () => isLight ? setName('dark') : setName('light')
+  const toggleTheme = () => (isLight ? setName("dark") : setName("light"));
 
   return (
-    <ThemeProvider theme={theme}>
-      <AppContainer>
-        <React.Fragment>
-          <Header toggleTheme={toggleTheme} isLight={isLight} />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/game" element={<GamePage />} />
-          </Routes>
-        </React.Fragment>
-      </AppContainer>
-    </ThemeProvider>
+    <GameProvider>
+      <ThemeProvider theme={theme}>
+        <AppContainer>
+          <React.Fragment>
+            <Header toggleTheme={toggleTheme} isLight={isLight} />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/game" element={<GamePage />} />
+            </Routes>
+          </React.Fragment>
+        </AppContainer>
+      </ThemeProvider>
+    </GameProvider>
   );
 };
 

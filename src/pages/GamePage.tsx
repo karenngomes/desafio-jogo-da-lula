@@ -1,47 +1,101 @@
 import styled from "@emotion/styled";
 import { Button } from "components/Button";
+import { Loader } from "components/Loader";
+import { useGame } from "contexts/GameContext";
+import { formattedCurrency } from "helpers/currency";
+import { isRunningGame } from "services/utils";
 
 export const GamePage = () => {
+  const {
+    initGame,
+    remainingPlayers,
+    isLoading,
+    eliminatedPlayers,
+    round,
+    totalPrize,
+    votesToEndGame,
+    nextRound,
+    isEndGame,
+    finishGame,
+  } = useGame();
+
   return (
     <GameComponent>
-      <h3>Round: 2</h3>
-      <h3>Fundo do prêmio: $20,1600.00</h3>
+      <h3>Round: {round}</h3>
+      <h3>Fundo do prêmio: {formattedCurrency(totalPrize)}</h3>
 
       <GameSections>
         <section>
           <h3>Jogadores Remanescentes</h3>
 
-          <ul>
-            {[...Array(3)].map((_, i) => (
-              <li key={i}>Karen Gomes</li>
-            ))}
-          </ul>
+          {remainingPlayers.length ? (
+            <ul>
+              {remainingPlayers.map((player) => (
+                <li key={player.id}>{player.fullName}</li>
+              ))}
+            </ul>
+          ) : (
+            <></>
+          )}
         </section>
 
         <MainSection>
-          <div className="main-info">
-            <p>Total de Jogadores Remanescentes: 21</p>
-            <p>Total de Jogadores Eliminados: 48</p>
-            <p>Votos para o fm do jogo: 12</p>
-            <p>Prêmio para cada jogador remanescente: $960,000.0</p>
-          </div>
+          {isEndGame ? (
+            <div className="main-info">
+              <>
+                <p>
+                  Total de Jogadores Remanescentes:{" "}
+                  {remainingPlayers.length ? remainingPlayers?.length : 0}
+                </p>
+                <p>
+                  Total de Jogadores Eliminados:{" "}
+                  {eliminatedPlayers?.length ? eliminatedPlayers?.length : 0}
+                </p>
+                <p>Votos para o fim do jogo: {votesToEndGame}</p>
+                <p>
+                  Prêmio para cada jogador remanescente:{" "}
+                  {formattedCurrency(
+                    remainingPlayers?.length
+                      ? (totalPrize / remainingPlayers?.length) + 420000
+                      : 0
+                  )}
+                </p>
+              </>
+            </div>
+          ) : (
+            ""
+          )}
 
           <div className="additional-info">
             <img src="assets/squid-game-soldier.png" alt="Squid Game Soldier" />
-            <p>Votos para fim de jogo: 12</p>
+            <p>Votos para fim de jogo: {votesToEndGame}</p>
 
-            <Button>Iniciar Rodada</Button>
+            {isRunningGame() ? (
+              isEndGame ? (
+                <Button onClick={finishGame}>Jogar novamente</Button>
+              ) : (
+                <Button onClick={nextRound}>Finalizar partida</Button>
+              )
+            ) : (
+              <Button onClick={initGame}>
+                Iniciar Rodada {isLoading && <Loader />}
+              </Button>
+            )}
           </div>
         </MainSection>
 
         <section>
           <h3>Jogadores Eliminados</h3>
 
-          <ul>
-            {[...Array(30)].map((_, i) => (
-              <li key={i}>Karen Gomes</li>
-            ))}
-          </ul>
+          {eliminatedPlayers.length ? (
+            <ul>
+              {eliminatedPlayers.map((player) => (
+                <li key={player.id}>{player.fullName}</li>
+              ))}
+            </ul>
+          ) : (
+            <></>
+          )}
         </section>
       </GameSections>
     </GameComponent>
@@ -55,7 +109,7 @@ const GameComponent = styled.div`
   justify-content: center;
   flex: 1;
   max-width: 1440px;
-  margin: auto;
+  /* margin: auto; */
 
   h3 {
     font-size: 1.5rem;
@@ -78,7 +132,7 @@ const GameSections = styled.div`
       list-style-position: inside;
       padding: 0;
       display: flex;
-      max-height: 60vh;
+      max-height: 900px;
       flex-flow: column wrap;
 
       li {
