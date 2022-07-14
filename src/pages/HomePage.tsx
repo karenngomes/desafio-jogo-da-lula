@@ -21,6 +21,10 @@ const HomeContainer = styled.div`
   justify-content: center;
   flex: 1;
 
+  a {
+    text-decoration: none;
+  }
+  
   img {
     max-width: min(90vw, 25rem);
   }
