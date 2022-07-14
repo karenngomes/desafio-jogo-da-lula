@@ -33,3 +33,9 @@ export const calculateVotesToEndGame = (players?: PlayerType[]): number =>
         0
       )
     : 0;
+
+export const playAudio = (url) => {
+   new Audio(url).play();
+};
+
+

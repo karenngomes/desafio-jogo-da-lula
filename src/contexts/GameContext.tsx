@@ -6,6 +6,7 @@ import {
   calculateVotesToEndGame,
   endGame,
   getDataLocalStorage,
+  playAudio,
   setDataLocalStorage,
 } from "services/utils";
 import { GameState, GameType, PlayerType } from "types/index";
@@ -76,13 +77,14 @@ const GameProvider: React.FC = ({ children }): JSX.Element => {
         };
         setDataLocalStorage(JSON.stringify(newData));
         setData({ ...newData, ...data });
+        
+        playAudio("assets/sounds/red-light-sound.mp3");
       })
       .catch((error: Response) => console.error(error.statusText))
       .finally(() => setIsLoading(false));
   }, []);
 
   const nextRound = () => {
-    console.log("nextRound");
     if (data.remainingPlayers) {
       const newEliminatedPlayers = [] as PlayerType[];
       const newRemainingPlayers = data.remainingPlayers
@@ -121,6 +123,7 @@ const GameProvider: React.FC = ({ children }): JSX.Element => {
       ) {
         setIsEndGame(true);
       }
+
       setData({
         ...newData,
       } as GameType);
@@ -130,14 +133,18 @@ const GameProvider: React.FC = ({ children }): JSX.Element => {
           ...newData,
         })
       );
+
+      playAudio("assets/sounds/red-light-sound.mp3");
     }
   };
 
-  const finishGame = useCallback(() => {
+  const restartGame = useCallback(() => {
     endGame();
-    window.location.reload();
 
+    setIsEndGame(false);
     setData({} as GameType);
+
+    playAudio("assets/sounds/main-theme.mp3");
   }, []);
 
   return (
@@ -153,7 +160,7 @@ const GameProvider: React.FC = ({ children }): JSX.Element => {
         isLoading,
         nextRound,
         isEndGame,
-        finishGame,
+        restartGame,
       }}
     >
       {children}

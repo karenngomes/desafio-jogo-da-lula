@@ -16,7 +16,7 @@ export interface GameType {
   isEndGame: boolean;
   initGame: () => void;
   nextRound: () => void;
-  finishGame: () => void;
+  restartGame: () => void;
 }
 
 export interface GameState {

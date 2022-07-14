@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Button } from "components/Button";
 import { Link } from "react-router-dom";
+import { playAudio } from "services/utils";
 
 export const HomePage = () => {
   return (
@@ -8,7 +9,7 @@ export const HomePage = () => {
       <img src="assets/squid-game-logo.png" alt="Squid Game Logo" />
       <h2>Jogo da Lula</h2>
       <Link to="/game">
-        <Button>Continuar</Button>
+        <Button onClick={() => playAudio("assets/sounds/main-theme.mp3")}>Continuar</Button>
       </Link>
     </HomeContainer>
   );

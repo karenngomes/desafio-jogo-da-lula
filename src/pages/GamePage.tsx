@@ -16,7 +16,7 @@ export const GamePage = () => {
     votesToEndGame,
     nextRound,
     isEndGame,
-    finishGame,
+    restartGame,
   } = useGame();
 
   return (
@@ -56,7 +56,7 @@ export const GamePage = () => {
                   Prêmio para cada jogador remanescente:{" "}
                   {formattedCurrency(
                     remainingPlayers?.length
-                      ? (totalPrize / remainingPlayers?.length) + 420000
+                      ? totalPrize / remainingPlayers?.length + 420000
                       : 0
                   )}
                 </p>
@@ -72,7 +72,7 @@ export const GamePage = () => {
 
             {isRunningGame() ? (
               isEndGame ? (
-                <Button onClick={finishGame}>Jogar novamente</Button>
+                <Button onClick={restartGame}>Jogar novamente</Button>
               ) : (
                 <Button onClick={nextRound}>Finalizar partida</Button>
               )
