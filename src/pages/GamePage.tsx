@@ -109,7 +109,7 @@ const GameComponent = styled.div`
   justify-content: center;
   flex: 1;
   max-width: 1440px;
-  /* margin: auto; */
+  margin: auto;
 
   h3 {
     font-size: 1.5rem;
