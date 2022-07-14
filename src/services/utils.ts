@@ -35,7 +35,19 @@ export const calculateVotesToEndGame = (players?: PlayerType[]): number =>
     : 0;
 
 export const playAudio = (url) => {
-   new Audio(url).play();
+  let audio = document.getElementById("new-audio") as HTMLAudioElement;
+  if (audio) {
+    audio.pause()
+    audio.src = url;
+    audio.play();
+  } else {
+    audio = document.createElement("audio");
+    
+    audio.id = "new-audio";
+    audio.src = url;
+
+    document.getElementById('root')?.appendChild(audio)
+    audio.play();
+  }
+
 };
-
-
