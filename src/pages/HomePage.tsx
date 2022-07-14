@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Button } from "components/Button";
 import { Link } from "react-router-dom";
-import { playAudio } from "services/utils";
+import { playAudio } from "utils/helpers";
 
 export const HomePage = () => {
   return (
