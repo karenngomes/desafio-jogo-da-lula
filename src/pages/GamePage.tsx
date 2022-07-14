@@ -67,7 +67,7 @@ export const GamePage = () => {
           )}
 
           <div className="additional-info">
-            <img src="assets/squid-game-soldier.png" alt="Squid Game Soldier" />
+            <img src="assets/red-man.gif" alt="Squid Game Soldier" />
             <p>Votos para fim de jogo: {votesToEndGame}</p>
 
             {isRunningGame() ? (
