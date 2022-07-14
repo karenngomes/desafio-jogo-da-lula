@@ -1,7 +1,10 @@
 import React, { Context, createContext, useEffect, useState } from "react";
 import { ThemeProvider } from "@emotion/react";
-import { SQUID_GAME_COLOR_MODE_KEY } from "helpers/constants";
 import { getTheme } from "theme";
+import {
+  getThemeColorMode,
+  setThemeColorMode,
+} from "services/localStorageService";
 
 interface ThemeColorModeContextType {
   toggleTheme: () => void;
@@ -13,16 +16,14 @@ const ThemeColorModeContext: Context<ThemeColorModeContextType> = createContext(
 );
 
 const ThemeColorModeProvider: React.FC = ({ children }) => {
-  const [name, setName] = useState(
-    localStorage.getItem(SQUID_GAME_COLOR_MODE_KEY) || "dark"
-  );
+  const [name, setName] = useState(getThemeColorMode);
   const theme = getTheme(name);
   const isLight = name === "light";
 
   const toggleTheme = () => (isLight ? setName("dark") : setName("light"));
 
   useEffect(() => {
-    localStorage.setItem(SQUID_GAME_COLOR_MODE_KEY, name);
+    setThemeColorMode(name);
   }, [name]);
 
   return (

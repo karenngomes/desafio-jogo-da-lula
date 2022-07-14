@@ -1,15 +1,17 @@
 import { createContext, useCallback, useContext, useState } from "react";
 
-import { URL_FAKER_NAMES } from "helpers/constants";
+import { URL_FAKER_NAMES } from "utils/constants";
+import {
+  endGame,
+  getDataLocalStorage,
+  setDataLocalStorage,
+} from "services/localStorageService";
+import { GameState, GameType, PlayerType } from "types/index";
 import {
   calculateTotalPrize,
   calculateVotesToEndGame,
-  endGame,
-  getDataLocalStorage,
   playAudio,
-  setDataLocalStorage,
-} from "services/utils";
-import { GameState, GameType, PlayerType } from "types/index";
+} from "utils/helpers";
 
 const GameContext = createContext<GameType>({} as GameType);
 
@@ -77,7 +79,7 @@ const GameProvider: React.FC = ({ children }): JSX.Element => {
         };
         setDataLocalStorage(JSON.stringify(newData));
         setData({ ...newData, ...data });
-        
+
         playAudio("assets/sounds/red-light-sound.mp3");
       })
       .catch((error: Response) => console.error(error.statusText))

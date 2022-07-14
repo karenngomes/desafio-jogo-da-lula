@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import { Button } from "components/Button";
 import { Loader } from "components/Loader";
 import { useGame } from "contexts/GameContext";
-import { formattedCurrency } from "helpers/currency";
-import { isRunningGame } from "services/utils";
+import { formattedCurrency } from "utils/helpers";
+import { isRunningGame } from "services/localStorageService";
 
 export const GamePage = () => {
   const {
