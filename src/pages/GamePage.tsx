@@ -120,7 +120,7 @@ const GameSections = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-evenly;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 
   section {
     flex-grow: 1;
