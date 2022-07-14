@@ -27,6 +27,11 @@ const GameProvider: React.FC = ({
     return getFormattedDataLocalStorage();
   });
 
+  const updateData = (newData: GameState) => {
+    setDataLocalStorage(JSON.stringify(newData));
+    setData(newData);
+  };
+
   const initGame = useCallback(() => {
     setIsLoading(true);
     fetch(URL_FAKER_NAMES)
@@ -46,15 +51,15 @@ const GameProvider: React.FC = ({
           };
         });
 
-        const newData = {
+        const newData: GameState = {
           remainingPlayers: players,
           eliminatedPlayers: [],
           round: 1,
           totalPrize: 0,
           votesToEndGame: 0,
         };
-        setDataLocalStorage(JSON.stringify(newData));
-        setData({ ...newData, ...data });
+
+        updateData(newData);
 
         playAudio("assets/sounds/red-light-sound.mp3");
       })
@@ -102,15 +107,7 @@ const GameProvider: React.FC = ({
         setIsEndGame(true);
       }
 
-      setData({
-        ...newData,
-      } as GameType);
-
-      setDataLocalStorage(
-        JSON.stringify({
-          ...newData,
-        })
-      );
+      updateData(newData);
 
       playAudio("assets/sounds/red-light-sound.mp3");
     }
@@ -131,7 +128,6 @@ const GameProvider: React.FC = ({
         eliminatedPlayers: data.eliminatedPlayers || [],
         round: data.round || 0,
         remainingPlayers: data.remainingPlayers || [],
-        allPlayers: [],
         totalPrize: data.totalPrize || 0,
         votesToEndGame: data.votesToEndGame || 0,
         initGame,

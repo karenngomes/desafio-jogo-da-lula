@@ -8,7 +8,6 @@ export interface PlayerType {
 export interface GameType {
   round: number;
   remainingPlayers: PlayerType[];
-  allPlayers: PlayerType[];
   eliminatedPlayers: PlayerType[];
   totalPrize: number;
   votesToEndGame: number;
