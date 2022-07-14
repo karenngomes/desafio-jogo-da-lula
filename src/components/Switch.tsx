@@ -9,7 +9,7 @@ export const Switch = ({
 }) => {
   return (
     <SwitchWrapper>
-      <input onClick={toggleTheme} type="checkbox" checked={!isLight} />
+      <input onChange={toggleTheme} type="checkbox" checked={!isLight} />
       <span className="slider round"></span>
     </SwitchWrapper>
   );

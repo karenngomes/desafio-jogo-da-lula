@@ -8,4 +8,6 @@ export const Button = styled.button`
   padding: 10px 18px;
   font-size: 18px;
   cursor: pointer;
+  display: inline-flex;
+  text-decoration: none;
 `;
