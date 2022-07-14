@@ -1,13 +1,11 @@
 import styled from "@emotion/styled";
+import { ThemeColorModeContext } from "contexts/ThemeColorModeContext";
+import { useContext } from "react";
 import { Switch } from "./Switch";
 
-export const Header = ({
-  toggleTheme,
-  isLight,
-}: {
-  toggleTheme: () => void;
-  isLight: boolean;
-}) => {
+export const Header = () => {
+  const { isLight, toggleTheme } = useContext(ThemeColorModeContext);
+
   return (
     <HeaderContainer>
       <p>{isLight ? "Light Mode" : "Dark Mode"}</p>
@@ -26,5 +24,4 @@ const HeaderContainer = styled.div`
     margin-right: 10px;
     font-weight: 600;
   }
-
 `;
